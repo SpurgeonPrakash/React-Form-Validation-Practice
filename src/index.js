@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import "./styles.css";
 
 import useFormValidation from "./useFormValidation";
-import validateAuth from "./validateAuth";
+import { validateAuth } from "./validateAuth";
 
 const INITIAL_STATE = {
   email: "",
@@ -12,6 +12,14 @@ const INITIAL_STATE = {
 };
 
 function Register() {
+  const sendValidationMethods = () => {
+    return {
+      email: validateAuth.is_valid_email,
+      password: validateAuth.is_valid_password,
+      submit: validateAuth.is_all_valid,
+    };
+  };
+
   const {
     handleSubmit,
     handleChange,
@@ -19,10 +27,12 @@ function Register() {
     values,
     errors,
     isSubmitting,
-  } = useFormValidation(INITIAL_STATE, validateAuth);
+    isTapped,
+  } = useFormValidation(INITIAL_STATE, sendValidationMethods);
   // const [email, setEmail] = React.useState("");
   // const [password, setPassword] = React.useState("");
-  console.log("Ran Render");
+  // console.log("Ran Render");
+
   return (
     <div className="container">
       <h1>Register Here</h1>

@@ -1,14 +1,17 @@
 import React from "react";
 
-function useFormValidation(initialState, validate) {
+function useFormValidation(initialState, sendValidationMethods) {
   const [values, setValues] = React.useState(initialState);
-  const [errors, setErrors] = React.useState({});
+  const [errors, setErrors] = React.useState(initialState);
   const [isSubmitting, setSubmitting] = React.useState(false);
 
+  const callingFunctions = sendValidationMethods();
+
   React.useEffect(() => {
-    console.log("Ran Use Effect");
+    // console.log("Ran Use Effect");
     if (isSubmitting) {
-      const noErrors = Object.keys(errors).length === 0;
+      const noErrors =
+        errors.email.length === 0 && errors.password.length === 0;
       if (noErrors) {
         console.log("authenticated!", values.email, values.password);
         setSubmitting(false);
@@ -25,14 +28,16 @@ function useFormValidation(initialState, validate) {
     });
   }
 
-  function handleBlur() {
-    const validationErrors = validate(values);
+  function handleBlur(e) {
+    const validationErrors = callingFunctions[e.target.name](values, errors);
+
+    // console.log(validationErrors);
     setErrors(validationErrors);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    const validationErrors = validate(values);
+    const validationErrors = callingFunctions["submit"](values, errors);
     setErrors(validationErrors);
     setSubmitting(true);
   }
