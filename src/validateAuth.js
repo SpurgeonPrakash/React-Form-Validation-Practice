@@ -7,8 +7,8 @@ const patterns = {
 };
 
 const is_valid_email = (values, errors) => {
-  console.log(errors);
-  console.log(values);
+  // console.log(errors);
+  // console.log(values);
   if (!values.email) {
     errors.email = "Required Email";
   } else if (!patterns.email.test(values.email)) {

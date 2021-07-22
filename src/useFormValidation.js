@@ -1,6 +1,6 @@
 import React from "react";
 
-function useFormValidation(initialState, sendValidationMethods) {
+function useFormValidation(initialState, sendValidationMethods, register) {
   const [values, setValues] = React.useState(initialState);
   const [errors, setErrors] = React.useState(initialState);
   const [isSubmitting, setSubmitting] = React.useState(false);
@@ -14,7 +14,13 @@ function useFormValidation(initialState, sendValidationMethods) {
       const noErrors =
         errors.email.length === 0 && errors.password.length === 0;
       if (noErrors) {
-        console.log("authenticated!", values.email, values.password);
+        register(values.email, values.password)
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         setSubmitting(false);
       } else {
         setSubmitting(false);

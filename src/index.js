@@ -20,6 +20,17 @@ function Register() {
     };
   };
 
+  const register = async (email, password) => {
+    // Do Your Side Effect Work Here Like Hitting register or login end point of backend api
+    //fetch().then().then().catch()
+
+    // for now, simulating side effect manually by changing this function as async function!!
+    console.log(
+      `user with email id ${email} and password ${password} registered successfully!!`
+    );
+    return "done";
+  };
+
   const {
     handleSubmit,
     handleChange,
@@ -28,7 +39,7 @@ function Register() {
     errors,
     isSubmitting,
     isTapped,
-  } = useFormValidation(INITIAL_STATE, sendValidationMethods);
+  } = useFormValidation(INITIAL_STATE, sendValidationMethods, register);
   // const [email, setEmail] = React.useState("");
   // const [password, setPassword] = React.useState("");
   // console.log("Ran Render");
