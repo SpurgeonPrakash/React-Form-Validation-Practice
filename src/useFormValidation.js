@@ -4,6 +4,7 @@ function useFormValidation(initialState, sendValidationMethods) {
   const [values, setValues] = React.useState(initialState);
   const [errors, setErrors] = React.useState(initialState);
   const [isSubmitting, setSubmitting] = React.useState(false);
+  const [isTapped, setTapped] = React.useState(false);
 
   const callingFunctions = sendValidationMethods();
 
@@ -26,13 +27,19 @@ function useFormValidation(initialState, sendValidationMethods) {
       ...values,
       [event.target.name]: event.target.value,
     });
-  }
-
-  function handleBlur(e) {
-    const validationErrors = callingFunctions[e.target.name](values, errors);
-
+    const validationErrors = callingFunctions[event.target.name](
+      {
+        ...values,
+        [event.target.name]: event.target.value,
+      },
+      errors
+    );
     // console.log(validationErrors);
     setErrors(validationErrors);
+  }
+
+  function handleBlur() {
+    setTapped(true);
   }
 
   function handleSubmit(event) {
@@ -49,6 +56,7 @@ function useFormValidation(initialState, sendValidationMethods) {
     values,
     errors,
     isSubmitting,
+    isTapped,
   };
 }
 

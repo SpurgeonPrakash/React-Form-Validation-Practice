@@ -1,5 +1,5 @@
 const patterns = {
-  special: /[@_#$]/g,
+  special: /[^0-9a-zA-Z\s]/g,
   digit: /[0-9]/g,
   small: /[a-z]/g,
   capital: /[A-Z]/g,
@@ -24,6 +24,7 @@ const is_valid_password = (values, errors) => {
   // [A-Z]+[0-9]+[@#\$&]*
   // if( /[A-Z]/.test(str) && /[0-9]/.test(str) && len >= 8 && len <= 15 )
   // for all special chars: /[^0-9a-zA-Z\s]/g,
+  // Limited special Chars: /[@_#$]/g,
 
   const smallChars = values.password.match(patterns.small) || [];
   const capitalChars = values.password.match(patterns.capital) || [];
@@ -44,8 +45,7 @@ const is_valid_password = (values, errors) => {
   } else if (digitChars.length === 0) {
     errors.password = "Password must have atleast 1 digit";
   } else if (specialChars.length === 0) {
-    errors.password =
-      "Password must have atleast 1 special charecters(@,_,$,#)";
+    errors.password = "Password must have atleast 1 special charecter";
   } else {
     errors.password = "";
   }

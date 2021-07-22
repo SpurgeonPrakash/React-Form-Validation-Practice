@@ -46,7 +46,9 @@ function Register() {
           autoComplete="off"
           placeholder="Your email address"
         />
-        {errors.email && <p className="error-text">{errors.email}</p>}
+        {errors.email && isTapped && (
+          <p className="error-text">{errors.email}</p>
+        )}
         <input
           onChange={handleChange}
           onBlur={handleBlur}
@@ -56,7 +58,9 @@ function Register() {
           type="password"
           placeholder="Choose a safe password"
         />
-        {errors.password && <p className="error-text">{errors.password}</p>}
+        {errors.password && isTapped && (
+          <p className="error-text">{errors.password}</p>
+        )}
         <div>
           <button disabled={isSubmitting} type="submit">
             Submit
